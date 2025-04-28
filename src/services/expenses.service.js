@@ -73,7 +73,12 @@ const remove = async (id) => {
 }
 
 const update = async (id, data) => {
-  await Expense.update({ ...data }, { where: { id } });
+  const [updatedRows] = await Expense.update({ ...data }, { where: { id } });
+
+  if (updatedRows === 0) {
+    return false;
+  }
+
   const updatedExpense = await Expense.findByPk(id);
   return updatedExpense;
 }

@@ -24,7 +24,12 @@ const remove = async (id) => {
 }
 
 const update = async (id, name) => {
-  await User.update({ name }, { where: { id } });
+  const [updatedRows] = await User.update({ name }, { where: { id } });
+
+  if (updatedRows === 0) {
+    return false;
+  }
+
   const updatedUser = await User.findByPk(id);
 
   return updatedUser;

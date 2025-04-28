@@ -64,7 +64,7 @@ const removeExpense = async (req, res) => {
 
   const deletedNumber = await remove(+id);
 
-  if (deletedNumber == []) {
+  if (deletedNumber === 0) {
     return res.status(404).send('Not Found');
   }
 
