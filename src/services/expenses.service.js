@@ -49,7 +49,7 @@ const add = async (data) => {
     return false;
   }
 
-  const user = User.findByPk(+userId);
+  const user = await User.findByPk(+userId);
 
   if (!user) {
     return false;
@@ -65,9 +65,11 @@ const get = async (id) => {
 };
 
 const remove = async (id) => {
-  await Expense.destroy({
+  const deletedNumber = await Expense.destroy({
     where: { id }
-  })
+  });
+
+  return deletedNumber;
 }
 
 const update = async (id, data) => {

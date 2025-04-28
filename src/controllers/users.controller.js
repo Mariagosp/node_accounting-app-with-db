@@ -36,7 +36,15 @@ const getUser = async (req, res) => {
 const removeUser = async (req, res) => {
   const { id } = req.params;
 
-  await remove(+id);
+  if (!id || isNaN(+id)) {
+    return res.status(400).send('Bad request');
+  }
+
+  const deletedNumber = await remove(+id);
+
+  if (deletedNumber == []) {
+    return res.status(404).send('Not Found');
+  }
 
   res.sendStatus(204);
 };

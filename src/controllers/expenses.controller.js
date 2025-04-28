@@ -58,7 +58,15 @@ const getExpense = async (req, res) => {
 const removeExpense = async (req, res) => {
   const id = req.params.id;
 
-  const expense = await remove(+id);
+  if (!id || isNaN(+id)) {
+    return res.status(400).send('Bad request2');
+  }
+
+  const deletedNumber = await remove(+id);
+
+  if (deletedNumber == []) {
+    return res.status(404).send('Not Found');
+  }
 
   res.status(204).send();
 };
@@ -81,9 +89,9 @@ const updateExpense = async (req, res) => {
 
   let foundExpense = await update(+id, expense);
 
-  // if (!foundExpense) {
-  //   return res.status(404).send('Not found');
-  // }
+  if (!foundExpense) {
+    return res.status(404).send('Not found');
+  }
 
   res.status(200).json(foundExpense);
 };

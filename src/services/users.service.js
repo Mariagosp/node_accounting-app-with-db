@@ -16,9 +16,11 @@ const get = (id) => {
 }
 
 const remove = async (id) => {
-  await User.destroy({
+  const deletedNumber = await User.destroy({
     where: { id }
   });
+
+  return deletedNumber;
 }
 
 const update = async (id, name) => {
